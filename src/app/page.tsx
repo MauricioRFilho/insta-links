@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { 
   Github, Linkedin, Instagram, Activity, 
   Flame, Send, Laptop, Terminal, Dumbbell, HeartPulse, 
-  MapPin, CheckCircle2, ChevronRight, Globe 
+  MapPin, CheckCircle2, ChevronRight, Globe,
+  Bike, Timer
 } from "lucide-react";
 import { DATA } from "@/data/profile";
 import { useState, useEffect } from "react";
@@ -12,7 +13,8 @@ import { useState, useEffect } from "react";
 // Icon Map
 const IconMap: { [key: string]: any } = {
   Github, Linkedin, Instagram, Activity,
-  Flame, Send, Laptop, Terminal, Dumbbell, HeartPulse
+  Flame, Send, Laptop, Terminal, Dumbbell, HeartPulse,
+  Bike, Timer
 };
 
 export default function Home() {

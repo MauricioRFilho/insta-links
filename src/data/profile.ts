@@ -69,8 +69,8 @@ export const DATA: { [key: string]: ProfileData } = {
         title: "🏃‍♂️ [DIR] /LOGS_ENDURANCE",
         accent: "text-cyber-red",
         items: [
-          { label: "EQUIPAMENTOS_TRI.csv", desc: "Análise de loadout.", url: "#", highlight: false, icon: "Dumbbell" },
-          { label: "ROTINA_TREINO.sh", desc: "Protocolos de execução diária.", url: "#", highlight: false, icon: "HeartPulse" }
+          { label: "EQUIPAMENTOS_TRI.csv", desc: "Análise de loadout.", url: "#", highlight: false, icon: "Bike" },
+          { label: "ROTINA_TREINO.sh", desc: "Protocolos de execução diária.", url: "#", highlight: false, icon: "Timer" }
         ]
       }
     ]
@@ -115,8 +115,8 @@ export const DATA: { [key: string]: ProfileData } = {
         title: "🏃‍♂️ [DIR] /ENDURANCE_LOGS",
         accent: "text-cyber-red",
         items: [
-          { label: "TRIATHLON_GEAR.csv", desc: "Equipment loadout analysis.", url: "#", highlight: false, icon: "Dumbbell" },
-          { label: "TRAINING_ROUTINE.sh", desc: "Daily execution protocols.", url: "#", highlight: false, icon: "HeartPulse" }
+          { label: "TRIATHLON_GEAR.csv", desc: "Equipment loadout analysis.", url: "#", highlight: false, icon: "Bike" },
+          { label: "TRAINING_ROUTINE.sh", desc: "Daily execution protocols.", url: "#", highlight: false, icon: "Timer" }
         ]
       }
     ]
