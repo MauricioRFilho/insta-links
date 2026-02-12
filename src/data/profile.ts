@@ -38,12 +38,12 @@ export const DATA: { [key: string]: ProfileData } = {
       "> Otimizando protocolos de endurance.",
       "> Unindo código & limites físicos."
     ],
-    avatar: "https://github.com/macmauricio.png",
+    avatar: "/profile-short.png",
     socials: [
-      { icon: "Github", url: "https://github.com/macmauricio" },
-      { icon: "Linkedin", url: "https://linkedin.com/in/macmauricio" },
-      { icon: "Instagram", url: "https://instagram.com/macmauricio" },
-      { icon: "Activity", url: "https://strava.com/athletes/macmauricio" }
+      { icon: "Github", url: "https://github.com/MauricioRFilho" },
+      { icon: "Linkedin", url: "https://linkedin.com/in/mauricio-d-ba069ab3/" },
+      { icon: "Instagram", url: "https://instagram.com/mauriciootk/" },
+      { icon: "Activity", url: "https://strava.com/athletes/65971729" }
     ],
     modules: [
       {
@@ -84,12 +84,12 @@ export const DATA: { [key: string]: ProfileData } = {
       "> Optimizing endurance protocols.",
       "> Bridging code & physical limits."
     ],
-    avatar: "https://github.com/macmauricio.png",
+    avatar: "/profile-short.png",
     socials: [
-      { icon: "Github", url: "https://github.com/macmauricio" },
-      { icon: "Linkedin", url: "https://linkedin.com/in/macmauricio" },
-      { icon: "Instagram", url: "https://instagram.com/macmauricio" },
-      { icon: "Activity", url: "https://strava.com/athletes/macmauricio" }
+      { icon: "Github", url: "https://github.com/MauricioRFilho" },
+      { icon: "Linkedin", url: "https://linkedin.com/in/mauricio-d-ba069ab3/" },
+      { icon: "Instagram", url: "https://instagram.com/mauriciootk/" },
+      { icon: "Activity", url: "https://strava.com/athletes/65971729" }
     ],
     modules: [
       {
