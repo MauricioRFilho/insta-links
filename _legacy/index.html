@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mauricio LinkHub - Senior Fullstack Developer & Endurance Athlete">
+    <title>MAURICIO_LINKHUB_v2.0 :: SYSTEM_ONLINE</title>
+    
+    <!-- Google Fonts: JetBrains Mono (Terminal) & Inter (UI) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            950: '#020617', // Deepest background
+                            900: '#0f172a',
+                            800: '#1e293b',
+                        },
+                        cyber: {
+                            cyan: '#00f0ff', // Electric Blue
+                            green: '#0aff0a', // Signal Green
+                            red: '#ff003c',   // Alert Red
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'glitch': 'glitch 1s linear infinite',
+                        'scanline': 'scanline 8s linear infinite',
+                        'typewriter': 'typewriter 2s steps(40, end)',
+                        'fade-in-up': 'fadeInUp 0.3s ease-out forwards',
+                    },
+                    keyframes: {
+                        glitch: {
+                            '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                            '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                            '62%': { transform: 'translate(0,0) skew(5deg)' },
+                        },
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
+                        },
+                        typewriter: {
+                            'from': { width: '0' },
+                            'to': { width: '100%' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Cyberpunk Scanlines */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            position: fixed;
+            pointer-events: none;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 50;
+            opacity: 0.15;
+        }
+
+        /* Glitch Effect on Hover */
+        .hover-glitch:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: #00f0ff;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff; 
+        }
+
+        /* CRT Flicker Animation */
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            50% { opacity: 1; }
+            100% { opacity: 0.98; }
+        }
+        body {
+            animation: flicker 0.15s infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-mono min-h-screen selection:bg-cyber-cyan selection:text-black overflow-x-hidden">
+
+    <!-- FX Layer -->
+    <div class="scanlines"></div>
+    <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-cyber-cyan via-cyber-green to-cyber-cyan z-50 opacity-80"></div>
+
+    <!-- Main Container: Asymmetric Grid -->
+    <main class="max-w-6xl mx-auto min-h-screen p-4 md:p-8 grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 md:gap-12 relative z-10">
+        
+        <!-- Sidebar: System Status / Profile -->
+        <aside class="flex flex-col gap-6 md:sticky md:top-8 h-fit">
+            
+            <!-- Identity Module -->
+            <div class="border border-slate-800 bg-slate-900/50 p-6 relative group overflow-hidden">
+                <div class="absolute top-0 right-0 p-1">
+                    <div class="w-2 h-2 bg-cyber-green animate-pulse"></div>
+                </div>
+                
+                <div class="relative w-24 h-24 mb-4 border border-cyber-cyan/30 p-1">
+                    <img id="avatar-img" src="" alt="Profile" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <!-- Corner Accents -->
+                    <div class="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-cyber-cyan"></div>
+                    <div class="absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-cyber-cyan"></div>
+                </div>
+
+                <h1 id="profile-name" class="text-xl font-bold text-white tracking-tighter uppercase mb-1"></h1>
+                <p id="profile-role" class="text-xs text-cyber-cyan font-bold uppercase tracking-widest mb-4"></p>
+                
+                <div class="h-px w-full bg-slate-800 mb-4"></div>
+                
+                <p id="profile-bio" class="text-xs text-slate-400 leading-relaxed font-sans mb-6"></p>
+
+                <!-- Social Matrix -->
+                <div id="socials-container" class="grid grid-cols-4 gap-2">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+            <!-- System Status Module -->
+            <div class="border border-slate-800 bg-slate-900/30 p-4 text-[10px] uppercase tracking-wider space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-slate-500">SYS.STATUS</span>
+                    <span class="text-cyber-green">ONLINE</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">LOC.COORDS</span>
+                    <span id="location-text" class="text-slate-300"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">UPTIME</span>
+                    <span class="text-slate-300">99.9%</span>
+                </div>
+                <div class="w-full bg-slate-800 h-1 mt-2">
+                    <div class="bg-cyber-cyan h-full w-[85%] animate-pulse"></div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Main Stream: Command Links -->
+        <section class="flex flex-col gap-8">
+            
+            <!-- Terminal Header -->
+            <div class="border-b border-slate-800 pb-2 mb-4 flex justify-between items-end">
+                <div class="text-xs text-cyber-cyan">
+                    <span class="mr-2">user@linkhub:~$</span><span class="animate-pulse">_</span>
+                </div>
+                <div class="text-[10px] text-slate-600">v2.0.4 CORE</div>
+            </div>
+
+            <!-- Dynamic Link Stream -->
+            <div id="links-stream" class="space-y-10">
+                <!-- JS Injected -->
+            </div>
+
+            <footer class="mt-auto pt-12 border-t border-slate-800/50 flex justify-between text-[10px] text-slate-600 uppercase">
+                <div>© <span id="year"></span> Mauricio_LinkHub</div>
+                <div>EXEC_TIME: 0.04ms</div>
+            </footer>
+        </section>
+
+    </main>
+
+    <script>
+        // Data Structure
+        const db = {
+          "profile": {
+            "name": "Mauricio Rodrigues",
+            "role": "Fullstack_Engineer",
+            "location": "CURITIBA_PR_BR",
+            "bio": "> Executing fullstack solutions.\n> Optimizing endurance protocols.\n> Bridging code & physical limits.",
+            "avatar": "https://github.com/macmauricio.png",
+            "socials": [
+                { "icon": "fa-github", "url": "https://github.com/macmauricio" },
+                { "icon": "fa-linkedin", "url": "https://linkedin.com/in/macmauricio" },
+                { "icon": "fa-instagram", "url": "https://instagram.com/macmauricio" },
+                { "icon": "fa-strava", "url": "https://strava.com/athletes/macmauricio" }
+            ]
+          },
+          "modules": [
+            {
+              "id": "OFFERS_MODULE",
+              "title": "🛒 [DIR] /OFFERS_&_DEALS",
+              "accent": "text-cyber-green",
+              "items": [
+                { "label": "SHOPEE_PROMOS.exe", "desc": "Exclusive discounts detected.", "url": "https://shope.ee/30NkYeBSiB", "highlight": true, "icon": "fa-fire" },
+                { "label": "TELEGRAM_CHANNEL.lnk", "desc": "Real-time offer stream.", "url": "#", "highlight": false, "icon": "fa-paper-plane" }
+              ]
+            },
+            {
+              "id": "TECH_MODULE",
+              "title": "💻 [DIR] /TECH_SETUP",
+              "accent": "text-cyber-cyan",
+              "items": [
+                { "label": "AMAZON_SETUP_LIST.json", "desc": "Hardware specification manifest.", "url": "#", "highlight": false, "icon": "fa-laptop-code" },
+                { "label": "DEV_PORTFOLIO.html", "desc": "Project repository access.", "url": "#", "highlight": false, "icon": "fa-terminal" }
+              ]
+            },
+            {
+              "id": "ENDURANCE_MODULE",
+              "title": "🏃‍♂️ [DIR] /ENDURANCE_LOGS",
+              "accent": "text-cyber-red",
+              "items": [
+                { "label": "TRIATHLON_GEAR.csv", "desc": "Equipment loadout analysis.", "url": "#", "highlight": false, "icon": "fa-person-running" },
+                { "label": "TRAINING_ROUTINE.sh", "desc": "Daily execution protocols.", "url": "#", "highlight": false, "icon": "fa-heart-pulse" }
+              ]
+            }
+          ]
+        };
+
+        // DOM Elements
+        const els = {
+            name: document.getElementById('profile-name'),
+            role: document.getElementById('profile-role'),
+            bio: document.getElementById('profile-bio'),
+            coords: document.getElementById('location-text'),
+            avatar: document.getElementById('avatar-img'),
+            socials: document.getElementById('socials-container'),
+            stream: document.getElementById('links-stream'),
+            year: document.getElementById('year')
+        };
+
+        // Render Logic
+        function init() {
+            // Profile
+            els.name.innerText = db.profile.name;
+            els.role.innerText = db.profile.role;
+            els.bio.innerText = db.profile.bio;
+            els.coords.innerText = db.profile.location;
+            els.avatar.src = db.profile.avatar;
+            els.year.innerText = new Date().getFullYear();
+
+            // Socials
+            els.socials.innerHTML = db.profile.socials.map(s => `
+                <a href="${s.url}" target="_blank" class="h-10 border border-slate-700 hover:border-cyber-cyan text-slate-500 hover:text-cyber-cyan hover:bg-cyber-cyan/10 flex items-center justify-center transition-all duration-200 group">
+                    <i class="fa-brands ${s.icon} text-sm group-hover:scale-110 transition-transform"></i>
+                </a>
+            `).join('');
+
+            // Stream Modules
+            els.stream.innerHTML = db.modules.map((mod, i) => {
+                const itemsHtml = mod.items.map(item => `
+                    <a href="${item.url}" target="_blank" class="block border-l-2 border-slate-800 hover:border-cyber-cyan hover:bg-slate-900/50 pl-4 py-3 transition-all duration-300 group">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-mono text-sm font-bold ${item.highlight ? 'text-cyber-green' : 'text-slate-200'} group-hover:text-cyber-cyan transition-colors">
+                                <i class="fa-solid ${item.icon} mr-2 text-[10px] opacity-60"></i>${item.label}
+                            </span>
+                            <span class="text-[10px] text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity">Execution -></span>
+                        </div>
+                        <p class="font-sans text-xs text-slate-500 group-hover:text-slate-400">${item.desc}</p>
+                    </a>
+                `).join('');
+
+                return `
+                    <div class="space-y-4 animate-fade-in-up" style="animation-delay: ${i * 0.15}s">
+                        <h2 class="font-mono text-sm font-bold ${mod.accent} flex items-center gap-2 border-b border-slate-800 pb-2">
+                            ${mod.title}
+                        </h2>
+                        <div class="grid gap-2">
+                            ${itemsHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Boot
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "insta-links",
+  "version": "1.0.0",
+  "description": "instagram link for profile",
+  "keywords": [
+    "instagram",
+    "links",
+    "affiliatte"
+  ],
+  "homepage": "https://github.com/MauricioRFilho/insta-links#readme",
+  "bugs": {
+    "url": "https://github.com/MauricioRFilho/insta-links/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MauricioRFilho/insta-links.git"
+  },
+  "license": "ISC",
+  "author": "MauricioSRF",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  }
+}
