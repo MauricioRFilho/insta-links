@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
+import JsonLd from "@/components/JsonLd";
 import { motion } from "framer-motion";
 import { 
   Github, Linkedin, Instagram, Activity, 
   Flame, Send, Laptop, Terminal, Dumbbell, HeartPulse, 
   MapPin, CheckCircle2, ChevronRight, Globe,
-  Bike, Timer
+  Bike, Timer, FolderOpen
 } from "lucide-react";
 import { DATA } from "@/data/profile";
 import { useState, useEffect } from "react";
@@ -14,7 +16,7 @@ import { useState, useEffect } from "react";
 const IconMap: { [key: string]: any } = {
   Github, Linkedin, Instagram, Activity,
   Flame, Send, Laptop, Terminal, Dumbbell, HeartPulse,
-  Bike, Timer
+  Bike, Timer, FolderOpen
 };
 
 export default function Home() {
@@ -31,6 +33,7 @@ export default function Home() {
 
   return (
     <main className="max-w-6xl mx-auto min-h-screen p-4 md:p-8 grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 md:gap-12 relative z-10">
+      <JsonLd />
       
       {/* Sidebar: System Status / Profile */}
       <aside className="flex flex-col gap-6 md:sticky md:top-8 h-fit">
@@ -47,14 +50,19 @@ export default function Home() {
           </div>
           
           <div className="relative w-24 h-24 mb-4 border border-cyber-cyan/30 p-1">
-            <img 
-              src={content.avatar} 
-              alt="Profile" 
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
+            <div className="relative w-full h-full"> 
+              <Image 
+                src={content.avatar} 
+                alt={`${content.name} - ${content.role}`}
+                fill
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority
+              />
+            </div>
             {/* Corner Accents */}
-            <div className="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-cyber-cyan"></div>
-            <div className="absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-cyber-cyan"></div>
+            <div className="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-cyber-cyan z-10"></div>
+            <div className="absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-cyber-cyan z-10"></div>
           </div>
 
           <h1 className="text-xl font-bold text-slate-100 tracking-tighter uppercase mb-1">

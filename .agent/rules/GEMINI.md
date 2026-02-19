@@ -97,11 +97,14 @@ When auto-applying an agent, inform the user:
 
 ### 🌐 Language Handling
 
-When user's prompt is NOT in English:
+### 🌐 Language Handling
 
-1. **Internally translate** for better comprehension
-2. **Respond in user's language** - match their communication
-3. **Code comments/variables** remain in English
+> 🔴 **MANDATORY:** ALWAYS respond in **Português do Brasil (PT-BR)**.
+
+1. **Output**: All conversation, explanations, and commit messages in PT-BR.
+2. **Code**: Comments and variable names remain in **English** (standard practice).
+3. **Artifacts**: Plans, tasks, and documentation in **PT-BR**.
+
 
 ### 🧹 Clean Code (Global Mandatory)
 
