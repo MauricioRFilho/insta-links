@@ -52,8 +52,7 @@ export const DATA: { [key: string]: ProfileData } = {
         accent: "text-cyber-green",
         items: [
           { label: "INDEX_OFERTAS.html", desc: "Acessar diretório completo de promoções.", url: "/ofertas", highlight: true, icon: "FolderOpen" },
-          { label: "SHOPEE_PROMOS.exe", desc: "Descontos exclusivos detectados.", url: "https://shope.ee/30NkYeBSiB", highlight: false, icon: "Flame" },
-          { label: "CANAL_TELEGRAM.lnk", desc: "Stream de ofertas em tempo real.", url: "#", highlight: false, icon: "Send" }
+          { label: "SHOPEE_PROMOS.exe", desc: "Descontos exclusivos detectados.", url: "https://shope.ee/30NkYeBSiB", highlight: false, icon: "Flame" }
         ]
       },
       {
@@ -62,8 +61,7 @@ export const DATA: { [key: string]: ProfileData } = {
         accent: "text-cyber-cyan",
         items: [
           { label: "INDEX_TECH.html", desc: "Acessar setup e portfólio completo.", url: "/tech", highlight: true, icon: "FolderOpen" },
-          { label: "SETUP_AMAZON.json", desc: "Manifesto de hardware.", url: "#", highlight: false, icon: "Laptop" },
-          { label: "PORTFOLIO_DEV.html", desc: "Acesso ao repositório de projetos.", url: "#", highlight: false, icon: "Terminal" }
+          { label: "SETUP_AMAZON.json", desc: "Manifesto de hardware.", url: "https://www.amazon.com.br/shop/mauriciootk", highlight: false, icon: "Laptop" }
         ]
       },
       {
@@ -71,9 +69,7 @@ export const DATA: { [key: string]: ProfileData } = {
         title: "🏃‍♂️ [DIR] /LOGS_ENDURANCE",
         accent: "text-cyber-red",
         items: [
-          { label: "INDEX_ENDURANCE.html", desc: "Acessar métricas e equipamentos.", url: "/endurance", highlight: true, icon: "FolderOpen" },
-          { label: "EQUIPAMENTOS_TRI.csv", desc: "Análise de loadout.", url: "#", highlight: false, icon: "Bike" },
-          { label: "ROTINA_TREINO.sh", desc: "Protocolos de execução diária.", url: "#", highlight: false, icon: "Timer" }
+          { label: "INDEX_ENDURANCE.html", desc: "Acessar métricas e equipamentos.", url: "/endurance", highlight: true, icon: "FolderOpen" }
         ]
       }
     ]
@@ -101,8 +97,7 @@ export const DATA: { [key: string]: ProfileData } = {
         accent: "text-cyber-green",
         items: [
           { label: "OFFERS_INDEX.html", desc: "Access full deals directory.", url: "/ofertas", highlight: true, icon: "FolderOpen" },
-          { label: "SHOPEE_PROMOS.exe", desc: "Exclusive discounts detected.", url: "https://shope.ee/30NkYeBSiB", highlight: false, icon: "Flame" },
-          { label: "TELEGRAM_CHANNEL.lnk", desc: "Real-time offer stream.", url: "#", highlight: false, icon: "Send" }
+          { label: "SHOPEE_PROMOS.exe", desc: "Exclusive discounts detected.", url: "https://shope.ee/30NkYeBSiB", highlight: false, icon: "Flame" }
         ]
       },
       {
@@ -111,8 +106,7 @@ export const DATA: { [key: string]: ProfileData } = {
         accent: "text-cyber-cyan",
         items: [
           { label: "TECH_INDEX.html", desc: "Access full setup and portfolio.", url: "/tech", highlight: true, icon: "FolderOpen" },
-          { label: "AMAZON_SETUP_LIST.json", desc: "Hardware specification manifest.", url: "#", highlight: false, icon: "Laptop" },
-          { label: "DEV_PORTFOLIO.html", desc: "Project repository access.", url: "#", highlight: false, icon: "Terminal" }
+          { label: "AMAZON_SETUP_LIST.json", desc: "Hardware specification manifest.", url: "https://www.amazon.com.br/shop/mauriciootk", highlight: false, icon: "Laptop" }
         ]
       },
       {
@@ -120,9 +114,7 @@ export const DATA: { [key: string]: ProfileData } = {
         title: "🏃‍♂️ [DIR] /ENDURANCE_LOGS",
         accent: "text-cyber-red",
         items: [
-          { label: "ENDURANCE_INDEX.html", desc: "Access metrics and loadout.", url: "/endurance", highlight: true, icon: "FolderOpen" },
-          { label: "TRIATHLON_GEAR.csv", desc: "Equipment loadout analysis.", url: "#", highlight: false, icon: "Bike" },
-          { label: "TRAINING_ROUTINE.sh", desc: "Daily execution protocols.", url: "#", highlight: false, icon: "Timer" }
+          { label: "ENDURANCE_INDEX.html", desc: "Access metrics and loadout.", url: "/endurance", highlight: true, icon: "FolderOpen" }
         ]
       }
     ]

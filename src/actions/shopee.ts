@@ -4,7 +4,7 @@ import { ShopeeService } from "@/services/shopee";
 
 export async function fetchShopeeProducts() {
   try {
-    const products = await ShopeeService.searchItems();
+    const products = await ShopeeService.searchByKeyword("ofertas");
     return { success: true, data: products };
   } catch (error) {
     console.error("Erro ao buscar produtos Shopee:", error);

@@ -105,6 +105,9 @@ When auto-applying an agent, inform the user:
 2. **Code**: Comments and variable names remain in **English** (standard practice).
 3. **Artifacts**: Plans, tasks, and documentation in **PT-BR**.
 
+### 💻 Terminal & Ambiente (Mandatório)
+
+> 🔴 **MANDATORY:** Sempre use o **PowerShell** como terminal padrão para execução de comandos e scripts pelo Antigravity/VS Code. Jamais utilize `cmd` ou `bash`, a não ser que uma ferramenta exija explicitamente.
 
 ### 🧹 Clean Code (Global Mandatory)
 

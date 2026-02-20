@@ -47,6 +47,7 @@ export default function TechPage() {
         </div>
       </section>
 
+      {/*
       <section>
         <h2 className="text-sm font-mono text-cyber-cyan font-bold mb-6 flex items-center gap-2">
           <Laptop size={16} />
@@ -56,6 +57,7 @@ export default function TechPage() {
           <p className="text-slate-500 font-mono text-xs">Waiting for GitHub API connection...</p>
         </div>
       </section>
+      */}
     </main>
   );
 }
