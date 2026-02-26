@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Mauricio LinkHub",
     images: [
       {
-        url: "/og-image.jpg", // Precisa ser criado ou usar o avatar como fallback
+        url: "/profile-short.png", 
         width: 1200,
         height: 630,
         alt: "Mauricio Rodrigues - Profile"
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     title: "Mauricio Rodrigues | Engenheiro Fullstack",
     description: "Engenheiro Fullstack Sênior & Atleta de Endurance.",
     creator: "@mauriciootk", // Assumindo baseado no Instagram, ajustar se necessário
-    images: ["/og-image.jpg"]
+    images: ["/profile-short.png"]
   },
   robots: {
     index: true,

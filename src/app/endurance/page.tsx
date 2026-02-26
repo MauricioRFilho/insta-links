@@ -46,7 +46,8 @@ export default function EndurancePage() {
         
         <div className="relative border-l-2 border-slate-800 ml-3 pl-8 py-2 space-y-8">
           {[
-            { title: "Bike", model: "Cervélo P-Series", desc: "Shimano Ultegra Di2, DT Swiss Wheels" },
+            { title: "Bike", model: "Oggi Velloce 2024", desc: "Original (Sem alterações)" },
+            { title: "Indoor", model: "Absolute 2", desc: "Rolo de treino" },
             { title: "Run", model: "Saucony Endorphin Pro 3", desc: "Carbon Plated, Speedroll Tech" },
             { title: "Swim", model: "Zone3 Aspire", desc: "Wetsuit, Yamamoto Rubber" }
           ].map((gear, i) => (
