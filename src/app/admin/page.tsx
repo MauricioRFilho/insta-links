@@ -2,9 +2,18 @@
 
 import PageHeader from "@/components/PageHeader";
 import { useState, useEffect } from "react";
-import { Loader2, Plus, Save, Search, ExternalLink, Package, AlertCircle, Check, Star, Trash2 } from "lucide-react";
+import { Loader2, Save, Search, ExternalLink, Package, AlertCircle, Check, Star, Trash2 } from "lucide-react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { searchShopeeProducts, saveProduct, getProducts, deleteProduct } from "@/actions/admin";
+
+interface DbProduct {
+  id: string;
+  shopee_id: string;
+  title: string;
+  image_url: string;
+  price: number;
+}
 
 interface ShopeeResult {
   shopee_id: string;
@@ -26,14 +35,16 @@ export default function AdminPage() {
   const [results, setResults] = useState<ShopeeResult[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [dbProducts, setDbProducts] = useState<any[]>([]);
-
-  useEffect(() => { loadProducts(); }, []);
+  const [dbProducts, setDbProducts] = useState<DbProduct[]>([]);
 
   async function loadProducts() {
     const data = await getProducts();
-    setDbProducts(data || []);
+    setDbProducts((data as DbProduct[]) || []);
   }
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   const handleSearch = async () => {
     if (!keyword.trim()) return;
@@ -157,8 +168,8 @@ export default function AdminPage() {
                         : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'
                     }`}
                   >
-                    <div className="w-20 h-20 bg-slate-800 rounded overflow-hidden shrink-0">
-                      <img src={product.image_url} alt={product.title} className="w-full h-full object-cover" />
+                    <div className="w-20 h-20 bg-slate-800 rounded overflow-hidden shrink-0 relative">
+                      <Image src={product.image_url} alt={product.title} fill unoptimized className="object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-slate-200 font-bold text-sm line-clamp-2">{product.title}</h3>
@@ -237,9 +248,9 @@ export default function AdminPage() {
             <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
               {dbProducts.map((prod) => (
                 <div key={prod.id} className="border border-slate-800 bg-slate-900/40 p-3 rounded flex gap-2 group">
-                  <div className="w-10 h-10 bg-slate-800 rounded overflow-hidden shrink-0">
+                  <div className="w-10 h-10 bg-slate-800 rounded overflow-hidden shrink-0 relative">
                     {prod.image_url ? (
-                      <img src={prod.image_url} alt={prod.title} className="w-full h-full object-cover" />
+                      <Image src={prod.image_url} alt={prod.title} fill unoptimized className="object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-slate-600"><Package size={14} /></div>
                     )}

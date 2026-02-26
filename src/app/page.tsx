@@ -7,13 +7,13 @@ import {
   Github, Linkedin, Instagram, Activity, 
   Flame, Send, Laptop, Terminal, Dumbbell, HeartPulse, 
   MapPin, CheckCircle2, ChevronRight, Globe,
-  Bike, Timer, FolderOpen
+  Bike, Timer, FolderOpen, type LucideIcon
 } from "lucide-react";
 import { DATA } from "@/data/profile";
 import { useState, useEffect } from "react";
 
 // Icon Map
-const IconMap: { [key: string]: any } = {
+const IconMap: Record<string, LucideIcon> = {
   Github, Linkedin, Instagram, Activity,
   Flame, Send, Laptop, Terminal, Dumbbell, HeartPulse,
   Bike, Timer, FolderOpen
@@ -24,7 +24,8 @@ export default function Home() {
   const [lang, setLang] = useState<"pt" | "en">("pt");
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const content = DATA[lang];

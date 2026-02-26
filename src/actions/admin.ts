@@ -13,13 +13,14 @@ export async function searchShopeeProducts(input: string): Promise<{ success: bo
     }
 
     return { success: true, data: products };
-  } catch (error: any) {
-    console.error("[Admin] Erro Shopee:", error?.message);
-    return { success: false, error: error?.message || "Erro desconhecido" };
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : "Erro desconhecido";
+    console.error("[Admin] Erro Shopee:", msg);
+    return { success: false, error: msg };
   }
 }
 
-export async function saveProduct(productData: any) {
+export async function saveProduct(productData: ShopeeProduct & { category?: string }) {
   try {
     const { data, error } = await supabase
       .from('products')
@@ -42,7 +43,7 @@ export async function saveProduct(productData: any) {
     revalidatePath('/ofertas');
     revalidatePath('/admin');
     return { success: true, data };
-  } catch (err) {
+  } catch {
     return { success: false, error: "Falha interna ao salvar" };
   }
 }
@@ -73,7 +74,7 @@ export async function deleteProduct(id: string) {
     revalidatePath('/ofertas');
     revalidatePath('/admin');
     return { success: true };
-  } catch (err) {
+  } catch {
     return { success: false, error: "Falha interna ao deletar" };
   }
 }

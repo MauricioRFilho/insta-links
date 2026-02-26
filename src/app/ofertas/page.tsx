@@ -1,9 +1,10 @@
 "use client";
 
 import PageHeader from "@/components/PageHeader";
-import { Flame, ShoppingCart, ExternalLink, Tag, Loader2 } from "lucide-react";
+import { Flame, ExternalLink, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { getProducts } from "@/actions/admin";
 
 interface Product {
@@ -66,7 +67,7 @@ export default function OfertasPage() {
                 <div className="flex gap-4">
                   <div className="w-16 h-16 bg-slate-800 relative overflow-hidden flex items-center justify-center text-cyber-green group-hover:scale-110 transition-transform">
                      {offer.image_url ? (
-                        <img src={offer.image_url} alt={offer.title} className="object-cover w-full h-full" />
+                        <Image src={offer.image_url} alt={offer.title} fill unoptimized className="object-cover" />
                      ) : (
                         <Flame size={24} />
                      )}

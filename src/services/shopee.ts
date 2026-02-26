@@ -34,7 +34,7 @@ export class ShopeeService {
     return { timestamp, signature };
   }
 
-  private static async graphql(query: string): Promise<any> {
+  private static async graphql<T = unknown>(query: string): Promise<T> {
     const payload = JSON.stringify({ query });
     const { timestamp, signature } = this.sign(payload);
 
@@ -50,20 +50,20 @@ export class ShopeeService {
 
     const data = await res.json();
     if (data.errors?.length) throw new Error(data.errors[0].message);
-    return data.data;
+    return data.data as T;
   }
 
-  private static mapNodes(nodes: any[]): ShopeeProduct[] {
-    return nodes.map((n: any) => ({
+  private static mapNodes(nodes: Record<string, unknown>[]): ShopeeProduct[] {
+    return nodes.map((n) => ({
       shopee_id: String(n.itemId),
-      title: n.productName,
-      image_url: n.imageUrl,
-      price: parseFloat(n.priceMin) || 0,
+      title: n.productName as string,
+      image_url: n.imageUrl as string,
+      price: parseFloat(n.priceMin as string) || 0,
       currency: 'BRL',
-      url: n.offerLink,
-      commission_rate: n.commissionRate,
-      rating: n.ratingStar,
-      sales: n.sales,
+      url: n.offerLink as string,
+      commission_rate: n.commissionRate as string | undefined,
+      rating: n.ratingStar as number | undefined,
+      sales: n.sales as number | undefined,
     }));
   }
 
@@ -83,7 +83,7 @@ export class ShopeeService {
 
   /** Busca produto específico por shopId + itemId */
   static async getByIds(shopId: string, itemId: string): Promise<ShopeeProduct[]> {
-    const data = await this.graphql(
+    const data = await this.graphql<{ productOfferV2?: { nodes?: Record<string, unknown>[] } }>(
       `{ productOfferV2(itemId: ${itemId}, shopId: ${shopId}) { nodes { itemId productName imageUrl priceMin priceMax offerLink commissionRate ratingStar sales } } }`
     );
     return this.mapNodes(data?.productOfferV2?.nodes || []);
@@ -92,7 +92,7 @@ export class ShopeeService {
   /** Busca produtos por keyword */
   static async searchByKeyword(keyword: string, limit = 10): Promise<ShopeeProduct[]> {
     const safe = keyword.replace(/"/g, '\\"');
-    const data = await this.graphql(
+    const data = await this.graphql<{ productOfferV2?: { nodes?: Record<string, unknown>[] } }>(
       `{ productOfferV2(keyword: "${safe}", sortType: 1, limit: ${limit}) { nodes { itemId productName imageUrl priceMin priceMax offerLink commissionRate ratingStar sales } } }`
     );
     return this.mapNodes(data?.productOfferV2?.nodes || []);
