@@ -56,7 +56,7 @@ export default function OfertasPage() {
             <motion.a
               key={offer.id}
               href={offer.url}
-              target="_blank"
+              target="_self"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

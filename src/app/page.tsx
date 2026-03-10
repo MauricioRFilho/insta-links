@@ -181,8 +181,8 @@ export default function Home() {
                     <a 
                       key={j} 
                       href={item.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                      target={item.url.startsWith('http') ? "_blank" : "_self"} 
+                      rel={item.url.startsWith('http') ? "noopener noreferrer" : undefined}
                       className="block border-l-2 border-slate-800 hover:border-cyber-cyan hover:bg-slate-900/50 pl-4 py-3 transition-all duration-300 group"
                     >
                       <div className="flex justify-between items-center mb-1">
