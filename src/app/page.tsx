@@ -22,8 +22,10 @@ const IconMap: Record<string, LucideIcon> = {
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [lang, setLang] = useState<"pt" | "en">("pt");
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
     const timer = setTimeout(() => setMounted(true), 0);
     return () => clearTimeout(timer);
   }, []);
@@ -85,10 +87,11 @@ export default function Home() {
           <div className="grid grid-cols-4 gap-2">
             {content.socials.map((s, i) => {
               const Icon = IconMap[s.icon] || Terminal;
+              const href = (isMobile && s.mobileUrl) ? s.mobileUrl : s.url;
               return (
                 <a 
                   key={i} 
-                  href={s.url} 
+                  href={href} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="h-10 border border-slate-700 hover:border-cyber-cyan text-slate-500 hover:text-cyber-cyan hover:bg-cyber-cyan/10 flex items-center justify-center transition-all duration-200 group"

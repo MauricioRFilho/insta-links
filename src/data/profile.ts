@@ -1,6 +1,7 @@
 export interface SocialLink {
   icon: string; // Lucide icon name
   url: string;
+  mobileUrl?: string;
 }
 
 export interface LinkItem {
@@ -42,8 +43,8 @@ export const DATA: { [key: string]: ProfileData } = {
     socials: [
       { icon: "Github", url: "https://github.com/MauricioRFilho" },
       { icon: "Linkedin", url: "https://linkedin.com/in/mauricio-d-ba069ab3/" },
-      { icon: "Instagram", url: "https://instagram.com/mauriciootk/" },
-      { icon: "Activity", url: "https://strava.com/athletes/65971729" }
+      { icon: "Instagram", url: "https://instagram.com/mauriciootk/", mobileUrl: "instagram://user?username=mauriciootk" },
+      { icon: "Activity", url: "https://strava.com/athletes/65971729", mobileUrl: "strava://athletes/65971729" }
     ],
     modules: [
       {
@@ -87,8 +88,8 @@ export const DATA: { [key: string]: ProfileData } = {
     socials: [
       { icon: "Github", url: "https://github.com/MauricioRFilho" },
       { icon: "Linkedin", url: "https://linkedin.com/in/mauricio-d-ba069ab3/" },
-      { icon: "Instagram", url: "https://instagram.com/mauriciootk/" },
-      { icon: "Activity", url: "https://strava.com/athletes/65971729" }
+      { icon: "Instagram", url: "https://instagram.com/mauriciootk/", mobileUrl: "instagram://user?username=mauriciootk" },
+      { icon: "Activity", url: "https://strava.com/athletes/65971729", mobileUrl: "strava://athletes/65971729" }
     ],
     modules: [
       {
