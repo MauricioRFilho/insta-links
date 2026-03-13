@@ -1,7 +1,7 @@
 "use server";
 
 import { ShopeeService, type ShopeeProduct } from "@/services/shopee";
-import { supabase } from "@/lib/supabase";
+import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function searchShopeeProducts(input: string): Promise<{ success: boolean; data?: ShopeeProduct[]; error?: string }> {
@@ -22,9 +22,19 @@ export async function searchShopeeProducts(input: string): Promise<{ success: bo
 
 export async function saveProduct(productData: ShopeeProduct & { category?: string }) {
   try {
-    const { data, error } = await supabase
-      .from('products')
-      .insert([{
+    // Usando upsert para evitar duplicatas e permitir atualização
+    const data = await prisma.product.upsert({
+      where: { shopee_id: productData.shopee_id },
+      update: {
+        title: productData.title,
+        image_url: productData.image_url,
+        price: productData.price,
+        url: productData.url,
+        category: productData.category || null,
+        currency: productData.currency || 'BRL',
+        active: true,
+      },
+      create: {
         shopee_id: productData.shopee_id,
         title: productData.title,
         image_url: productData.image_url,
@@ -32,49 +42,43 @@ export async function saveProduct(productData: ShopeeProduct & { category?: stri
         url: productData.url,
         category: productData.category || null,
         currency: productData.currency || 'BRL',
-      }])
-      .select();
-
-    if (error) {
-      console.error("Supabase Error:", error);
-      return { success: false, error: error.message };
-    }
+      },
+    });
 
     revalidatePath('/ofertas');
     revalidatePath('/admin');
     return { success: true, data };
-  } catch {
-    return { success: false, error: "Falha interna ao salvar" };
+  } catch (error) {
+    console.error("[Admin] Prisma Save Error:", error);
+    return { success: false, error: "Falha interna ao salvar no Prisma" };
   }
 }
 
 export async function getProducts() {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .eq('active', true)
-    .order('created_at', { ascending: false });
+  try {
+    const data = await prisma.product.findMany({
+      where: { active: true },
+      orderBy: { createdAt: 'desc' },
+    });
     
-  if (error) return [];
-  return data;
+    return data;
+  } catch (error) {
+    console.error("[Admin] Prisma Get Error:", error);
+    return [];
+  }
 }
 
 export async function deleteProduct(id: string) {
   try {
-    const { error } = await supabase
-      .from('products')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error("Supabase Delete Error:", error);
-      return { success: false, error: error.message };
-    }
+    await prisma.product.delete({
+      where: { id },
+    });
 
     revalidatePath('/ofertas');
     revalidatePath('/admin');
     return { success: true };
-  } catch {
-    return { success: false, error: "Falha interna ao deletar" };
+  } catch (error) {
+    console.error("[Admin] Prisma Delete Error:", error);
+    return { success: false, error: "Falha interna ao deletar no Prisma" };
   }
 }
