@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔗 Mauricio Links
 
-## Getting Started
+Central de links pessoal estilo Linktree, com painel admin que publica via
+GitHub API.
 
-First, run the development server:
+**URL:** [links.mauricio.com.br](https://links.mauricio.com.br)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Stack
+
+- **Next.js 16** (App Router)
+- **Tailwind CSS v4**
+- **Framer Motion** (animações)
+- **Lucide React** (ícones)
+- **Zero banco de dados** — dados em `public/data/links.json`
+
+---
+
+## Estrutura
+
+```
+src/
+├── app/
+│   ├── page.tsx              ← Página pública (Linktree)
+│   ├── admin/page.tsx        ← Painel admin (login + CRUD + publish)
+│   ├── api/
+│   │   ├── auth/route.ts     ← Validação de senha
+│   │   └── publish/route.ts  ← Push JSON via GitHub API
+│   ├── layout.tsx
+│   └── globals.css
+├── components/
+│   ├── ProfileHeader.tsx     ← Avatar + nome + bio
+│   ├── SocialIcons.tsx       ← Ícones redes sociais
+│   ├── LinkCard.tsx          ← Botão de link pessoal
+│   └── RecommendationCard.tsx ← Card de produto com badge da loja
+public/
+├── data/links.json           ← "Banco de dados" (git-tracked)
+└── profile-short.png
 ```
 
-Open [https://insta-links-rho.vercel.app/](https://insta-links-rho.vercel.app/) to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Como funciona
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Página pública** (`/`) — Lê `links.json` e renderiza os links
+2. **Admin** (`/admin`) — Login com senha → CRUD de links e recomendações
+3. **Publicar** — O admin faz `PUT` no JSON via GitHub Contents API → commit
+   automático → Vercel detecta o push e redesplega
 
-## Learn More
+```
+Admin edita links → Clica "Publicar"
+  → API Route /api/publish
+    → GitHub Contents API (PUT links.json)
+      → Vercel Webhook → Redeploy automático
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Variáveis de Ambiente
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Variável | Tipo | Descrição |
+|----------|------|-----------|
+| `NEXT_PUBLIC_BASE_URL` | Pública | Domínio do site (sem `https://`) |
+| `ADMIN_PASSWORD` | **Secreta** | Senha de acesso ao painel admin |
+| `GITHUB_TOKEN` | **Secreta** | Personal Access Token do GitHub (permissão `repo`) |
+| `GITHUB_REPO` | Server | Repositório no formato `owner/repo` |
 
-## Deploy on Vercel
+### Como gerar o GITHUB_TOKEN
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Acesse [github.com/settings/tokens](https://github.com/settings/tokens)
+2. **Generate new token (classic)**
+3. Selecione o scope: **`repo`** (Full control of private repositories)
+4. Copie o token gerado (`ghp_...`)
+5. Cole como valor de `GITHUB_TOKEN` no `.env.local` e na Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Deploy (Vercel)
+
+### Variáveis que devem ser configuradas na Vercel:
+
+```
+NEXT_PUBLIC_BASE_URL = links.mauricio.com.br
+ADMIN_PASSWORD       = (sua senha forte)
+GITHUB_TOKEN         = ghp_XXXXXXXXXXXXXX
+GITHUB_REPO          = MauricioRFilho/insta-links
+```
+
+**Onde configurar:** Vercel Dashboard → Projeto → Settings → Environment Variables
+
+> ⚠️ Marque `ADMIN_PASSWORD` e `GITHUB_TOKEN` como **Sensitive** na Vercel.
+
+---
+
+## Desenvolvimento local
+
+```bash
+npm install
+npm run dev
+```
+
+Acesse:
+- Página: [localhost:3000](http://localhost:3000)
+- Admin: [localhost:3000/admin](http://localhost:3000/admin)
+
+---
+
+## Gerenciamento de links
+
+### Via Admin (recomendado)
+1. Acesse `/admin` e faça login
+2. Use a aba **Links** para links pessoais (GitHub, Strava, Contato)
+3. Use a aba **Recomendações** para produtos com badge de loja (Shopee, Amazon, ML)
+4. Clique **Publicar** para salvar as mudanças
+
+### Via JSON (manual)
+Edite `public/data/links.json` diretamente e faça commit/push.

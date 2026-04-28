@@ -1,0 +1,57 @@
+{
+  "profile": {
+    "name": "Mauricio Rodrigues",
+    "avatar": "/profile-short.png",
+    "bio": "Engenheiro Fullstack Sênior & Atleta de Endurance",
+    "socials": [
+      { "platform": "github", "url": "https://github.com/MauricioRFilho" },
+      { "platform": "linkedin", "url": "https://linkedin.com/in/mauricio-d-ba069ab3/" },
+      { "platform": "instagram", "url": "https://instagram.com/mauriciootk/" },
+      { "platform": "strava", "url": "https://strava.com/athletes/65971729" }
+    ]
+  },
+  "links": [
+    {
+      "id": "1",
+      "title": "Meu GitHub",
+      "url": "https://github.com/MauricioRFilho",
+      "emoji": "🧑‍💻",
+      "active": true,
+      "order": 0
+    },
+    {
+      "id": "2",
+      "title": "Strava - Treinos & Corridas",
+      "url": "https://strava.com/athletes/65971729",
+      "emoji": "🏃",
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "contact",
+      "title": "Contato & Parcerias",
+      "url": "mailto:mauricio.srfh@gmail.com",
+      "emoji": "📩",
+      "active": true,
+      "order": 2
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "rec-1",
+      "title": "Meu Setup Completo",
+      "url": "https://www.amazon.com.br/shop/mauriciootk",
+      "store": "amazon",
+      "active": true,
+      "order": 0
+    },
+    {
+      "id": "rec-2",
+      "title": "Promoções Shopee",
+      "url": "https://shope.ee/30NkYeBSiB",
+      "store": "shopee",
+      "active": true,
+      "order": 1
+    }
+  ]
+}

@@ -1,17 +1,16 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}`
+  : "https://links.mauricio.com.br";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL 
-    ? `https://${process.env.NEXT_PUBLIC_BASE_URL}` 
-    : "https://links.mauricio.com.br";
-
   return [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 1,
     },
-    // Adicione outras rotas aqui se o app crescer
   ];
 }
