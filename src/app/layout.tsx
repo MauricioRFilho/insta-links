@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
+import { readFile } from "fs/promises";
+import { join } from "path";
+import type { SiteData } from "@/types/schema";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,66 +10,64 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
+/**
+ * Reads data.json at build time to populate SEO metadata dynamically.
+ * @see SiteData for the full schema definition
+ */
+async function loadSiteData(): Promise<SiteData> {
+  const filePath = join(process.cwd(), "public", "data", "data.json");
+  const raw = await readFile(filePath, "utf-8");
+  return JSON.parse(raw);
+}
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}`
-  : "https://links.mauricio.com.br";
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await loadSiteData();
+  const { meta, profile } = data;
 
-export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
-  alternates: { canonical: "/" },
-  title: {
-    default: "Mauricio Rodrigues | Links",
-    template: "%s | Mauricio Rodrigues",
-  },
-  description:
-    "Links oficiais de Mauricio Rodrigues — Engenheiro Fullstack Sênior & Atleta de Endurance.",
-  keywords: [
-    "Mauricio Rodrigues",
-    "Linktree",
-    "Links",
-    "Fullstack Engineer",
-    "Endurance",
-  ],
-  authors: [{ name: "Mauricio Rodrigues", url: baseUrl }],
-  creator: "Mauricio Rodrigues",
-  openGraph: {
-    type: "profile",
-    locale: "pt_BR",
-    url: baseUrl,
-    title: "Mauricio Rodrigues | Links",
-    description:
-      "Links oficiais de Mauricio Rodrigues — Engenheiro Fullstack & Atleta de Endurance.",
-    siteName: "Mauricio Links",
-    images: [
-      {
-        url: "/profile-short.png",
-        width: 1200,
-        height: 630,
-        alt: "Mauricio Rodrigues",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Mauricio Rodrigues | Links",
-    description: "Links oficiais — Fullstack & Endurance.",
-    images: ["/profile-short.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+  return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_BASE_URL
+        ? `https://${process.env.NEXT_PUBLIC_BASE_URL}`
+        : "https://links.mauricio.com.br"
+    ),
+    alternates: { canonical: "/" },
+    title: meta.title,
+    description: meta.description,
+    keywords: [profile.name, "Links", "Creator", "Linktree"],
+    authors: [{ name: profile.name }],
+    creator: profile.name,
+    openGraph: {
+      type: "profile",
+      locale: meta.lang.replace("-", "_"),
+      title: meta.title,
+      description: meta.description,
+      siteName: meta.title,
+      images: [
+        {
+          url: meta.ogImage,
+          width: 1200,
+          height: 630,
+          alt: profile.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: [meta.ogImage],
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+      },
     },
-  },
-};
+  };
+}
 
 export default function RootLayout({
   children,
@@ -74,8 +75,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="bg-mesh min-h-screen">{children}</body>
+    <html lang="pt-BR" className={inter.variable}>
+      <body className="min-h-screen">{children}</body>
     </html>
   );
 }

@@ -1,7 +1,6 @@
-# 🔗 Mauricio Links
+# 🔗 LinkHub
 
-Central de links pessoal estilo Linktree, com painel admin que publica via
-GitHub API.
+Central de links para criadores de conteúdo — minimalista, dinâmica, open source.
 
 **URL:** [links.mauricio.com.br](https://links.mauricio.com.br)
 
@@ -13,7 +12,8 @@ GitHub API.
 - **Tailwind CSS v4**
 - **Framer Motion** (animações)
 - **Lucide React** (ícones)
-- **Zero banco de dados** — dados em `public/data/links.json`
+- **Cloudflare Pages** (deploy)
+- **Zero banco de dados** — dados em `public/data/data.json`
 
 ---
 
@@ -22,74 +22,91 @@ GitHub API.
 ```
 src/
 ├── app/
-│   ├── page.tsx              ← Página pública (Linktree)
-│   ├── admin/page.tsx        ← Painel admin (login + CRUD + publish)
-│   ├── api/
-│   │   ├── auth/route.ts     ← Validação de senha
-│   │   └── publish/route.ts  ← Push JSON via GitHub API
-│   ├── layout.tsx
-│   └── globals.css
+│   ├── page.tsx              ← Página pública (renderiza sections)
+│   ├── layout.tsx            ← Layout com meta dinâmico do JSON
+│   ├── globals.css           ← Design system
+│   ├── icon.tsx              ← Favicon gerado
+│   ├── manifest.ts           ← PWA manifest
+│   ├── robots.ts             ← robots.txt
+│   └── sitemap.ts            ← sitemap.xml
 ├── components/
-│   ├── ProfileHeader.tsx     ← Avatar + nome + bio
-│   ├── SocialIcons.tsx       ← Ícones redes sociais
-│   ├── LinkCard.tsx          ← Botão de link pessoal
-│   └── RecommendationCard.tsx ← Card de produto com badge da loja
+│   ├── Avatar.tsx            ← Avatar com ring animado + verified
+│   ├── ProfileHeader.tsx     ← Nome + bio
+│   ├── SocialBar.tsx         ← Ícones de redes sociais
+│   ├── LinkItem.tsx          ← Card de link genérico
+│   ├── ProductItem.tsx       ← Card de produto com badge de loja
+│   ├── SectionHeader.tsx     ← Divider de seção
+│   └── Footer.tsx            ← Footer minimalista
+├── types/
+│   └── schema.ts             ← Tipagem do JSON schema
 public/
-├── data/links.json           ← "Banco de dados" (git-tracked)
-└── profile-short.png
+├── data/data.json            ← "Banco de dados" (fonte da verdade)
+├── avatar.png                ← Foto de perfil
+└── thumbnails/               ← Thumbnails opcionais dos links
 ```
 
 ---
 
 ## Como funciona
 
-1. **Página pública** (`/`) — Lê `links.json` e renderiza os links
-2. **Admin** (`/admin`) — Login com senha → CRUD de links e recomendações
-3. **Publicar** — O admin faz `PUT` no JSON via GitHub Contents API → commit
-   automático → Vercel detecta o push e redesplega
+1. **Página pública** (`/`) — Lê `data.json` e renderiza as seções dinâmicas
+2. **Gestão de links** — Edite `public/data/data.json` e faça push → Cloudflare Pages rebuilda automaticamente
 
 ```
-Admin edita links → Clica "Publicar"
-  → API Route /api/publish
-    → GitHub Contents API (PUT links.json)
-      → Vercel Webhook → Redeploy automático
+Editar data.json → git push
+  → Cloudflare Pages detecta push
+    → Rebuild automático → Site atualizado
 ```
 
 ---
 
-## Variáveis de Ambiente
+## Schema (`data.json`)
 
-| Variável | Tipo | Descrição |
-|----------|------|-----------|
-| `NEXT_PUBLIC_BASE_URL` | Pública | Domínio do site (sem `https://`) |
-| `ADMIN_PASSWORD` | **Secreta** | Senha de acesso ao painel admin |
-| `GITHUB_TOKEN` | **Secreta** | Personal Access Token do GitHub (permissão `repo`) |
-| `GITHUB_REPO` | Server | Repositório no formato `owner/repo` |
+O JSON é dividido em 4 seções:
 
-### Como gerar o GITHUB_TOKEN
+| Seção | Descrição |
+|-------|-----------|
+| `meta` | SEO: title, description, ogImage, lang |
+| `theme` | Cor de acento (`accentColor`), estilo |
+| `profile` | Nome, bio, avatar, verified, redes sociais |
+| `sections[]` | Lista de itens: `link`, `header`, ou `product` |
 
-1. Acesse [github.com/settings/tokens](https://github.com/settings/tokens)
-2. **Generate new token (classic)**
-3. Selecione o scope: **`repo`** (Full control of private repositories)
-4. Copie o token gerado (`ghp_...`)
-5. Cole como valor de `GITHUB_TOKEN` no `.env.local` e na Vercel
+### Tipos de seção
+
+| type | Campos | Descrição |
+|------|--------|-----------|
+| `link` | title, subtitle, url, emoji, thumbnail | Link genérico |
+| `header` | title | Divider visual entre grupos |
+| `product` | title, subtitle, url, store, thumbnail | Recomendação com badge de loja |
 
 ---
 
-## Deploy (Vercel)
+## Personalização
 
-### Variáveis que devem ser configuradas na Vercel:
+Para usar em outro perfil, edite apenas `public/data/data.json`:
+
+1. **Perfil**: nome, bio, avatar, redes sociais
+2. **Tema**: `accentColor` aceita qualquer cor hex (ex: `#3b82f6` para azul)
+3. **Links**: adicione/remova itens em `sections[]`
+4. **SEO**: title, description, ogImage em `meta`
+
+---
+
+## Deploy (Cloudflare Pages)
+
+### Configuração no dashboard:
+
+1. Conecte o repositório GitHub
+2. **Build command:** `npx @cloudflare/next-on-pages`
+3. **Output directory:** `.vercel/output/static`
+4. **Compatibility flags:** `nodejs_compat`
+
+### Variáveis de ambiente:
 
 ```
 NEXT_PUBLIC_BASE_URL = links.mauricio.com.br
-ADMIN_PASSWORD       = (sua senha forte)
-GITHUB_TOKEN         = ghp_XXXXXXXXXXXXXX
-GITHUB_REPO          = MauricioRFilho/insta-links
+NODE_VERSION = 20
 ```
-
-**Onde configurar:** Vercel Dashboard → Projeto → Settings → Environment Variables
-
-> ⚠️ Marque `ADMIN_PASSWORD` e `GITHUB_TOKEN` como **Sensitive** na Vercel.
 
 ---
 
@@ -100,19 +117,10 @@ npm install
 npm run dev
 ```
 
-Acesse:
-- Página: [localhost:3000](http://localhost:3000)
-- Admin: [localhost:3000/admin](http://localhost:3000/admin)
+Acesse: [localhost:3000](http://localhost:3000)
 
 ---
 
-## Gerenciamento de links
+## Licença
 
-### Via Admin (recomendado)
-1. Acesse `/admin` e faça login
-2. Use a aba **Links** para links pessoais (GitHub, Strava, Contato)
-3. Use a aba **Recomendações** para produtos com badge de loja (Shopee, Amazon, ML)
-4. Clique **Publicar** para salvar as mudanças
-
-### Via JSON (manual)
-Edite `public/data/links.json` diretamente e faça commit/push.
+MIT

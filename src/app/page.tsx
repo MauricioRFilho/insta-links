@@ -1,141 +1,107 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { SiteData, Section } from "@/types/schema";
+import Avatar from "@/components/Avatar";
 import ProfileHeader from "@/components/ProfileHeader";
-import SocialIcons from "@/components/SocialIcons";
-import LinkCard from "@/components/LinkCard";
-import RecommendationCard from "@/components/RecommendationCard";
-import { motion } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
-
-interface Social {
-  platform: string;
-  url: string;
-}
-
-interface LinkItem {
-  id: string;
-  title: string;
-  url: string;
-  emoji?: string;
-  active: boolean;
-  order: number;
-}
-
-interface RecommendationItem {
-  id: string;
-  title: string;
-  url: string;
-  store: string;
-  active: boolean;
-  order: number;
-}
-
-interface LinksData {
-  profile: {
-    name: string;
-    avatar: string;
-    bio: string;
-    socials: Social[];
-  };
-  links: LinkItem[];
-  recommendations: RecommendationItem[];
-}
+import SocialBar from "@/components/SocialBar";
+import LinkItem from "@/components/LinkItem";
+import ProductItem from "@/components/ProductItem";
+import SectionHeader from "@/components/SectionHeader";
+import Footer from "@/components/Footer";
 
 export default function Home() {
-  const [data, setData] = useState<LinksData | null>(null);
+  const [data, setData] = useState<SiteData | null>(null);
 
   useEffect(() => {
-    fetch("/data/links.json")
+    fetch("/data/data.json")
       .then((r) => r.json())
       .then(setData)
       .catch(console.error);
   }, []);
 
+  /* Loading spinner */
   if (!data) {
     return (
       <main className="flex items-center justify-center min-h-screen">
-        <div className="w-6 h-6 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
+        <div className="w-5 h-5 border-2 border-text-muted/20 border-t-text-muted rounded-full animate-spin" />
       </main>
     );
   }
 
-  const activeLinks = data.links
-    .filter((l) => l.active)
-    .sort((a, b) => a.order - b.order);
+  const { profile, theme, sections } = data;
+  const accentColor = theme.accentColor;
+  const activeSections = sections.filter((s) => s.active);
 
-  const activeRecs = (data.recommendations || [])
-    .filter((r) => r.active)
-    .sort((a, b) => a.order - b.order);
+  /** Renders a section item based on its type */
+  function renderSection(section: Section, index: number) {
+    switch (section.type) {
+      case "link":
+        return (
+          <LinkItem
+            key={`link-${index}`}
+            title={section.title}
+            subtitle={section.subtitle}
+            url={section.url}
+            emoji={section.emoji}
+            thumbnail={section.thumbnail}
+            index={index}
+            accentColor={accentColor}
+          />
+        );
+      case "product":
+        return (
+          <ProductItem
+            key={`product-${index}`}
+            title={section.title}
+            subtitle={section.subtitle}
+            url={section.url}
+            store={section.store}
+            thumbnail={section.thumbnail}
+            index={index}
+            accentColor={accentColor}
+          />
+        );
+      case "header":
+        return (
+          <SectionHeader
+            key={`header-${index}`}
+            title={section.title}
+            index={index}
+          />
+        );
+      default:
+        return null;
+    }
+  }
+
+  /* Apply accent color as CSS custom property for dynamic theming */
+  const accentStyle = {
+    "--accent": accentColor,
+  } as React.CSSProperties;
 
   return (
-    <main className="flex flex-col items-center min-h-screen px-4 py-12 md:py-16">
+    <main
+      className="flex flex-col items-center min-h-screen px-4 py-14 md:py-20"
+      style={accentStyle}
+    >
       {/* Profile */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <ProfileHeader
-          name={data.profile.name}
-          bio={data.profile.bio}
-          avatar={data.profile.avatar}
-        />
-        <div className="flex justify-center">
-          <SocialIcons socials={data.profile.socials} />
-        </div>
-      </motion.div>
+      <Avatar
+        src={profile.avatar}
+        name={profile.name}
+        verified={profile.verified}
+        accentColor={accentColor}
+      />
+      <ProfileHeader name={profile.name} bio={profile.bio} />
+      <SocialBar socials={profile.socials} accentColor={accentColor} />
 
-      {/* Links */}
-      <div className="w-full max-w-[480px] mt-8 flex flex-col gap-3">
-        {activeLinks.map((link, i) => (
-          <LinkCard
-            key={link.id}
-            title={link.title}
-            url={link.url}
-            emoji={link.emoji}
-            index={i}
-          />
-        ))}
+      {/* Sections */}
+      <div className="w-full max-w-[480px] mt-8 flex flex-col gap-2.5">
+        {activeSections.map((section, i) => renderSection(section, i))}
       </div>
 
-      {/* Recommendations Section */}
-      {activeRecs.length > 0 && (
-        <div className="w-full max-w-[480px] mt-10 flex flex-col gap-3">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="flex items-center gap-2 mb-1"
-          >
-            <ShoppingBag size={14} className="text-text-secondary/50" />
-            <span className="text-xs font-medium text-text-secondary/60 uppercase tracking-wider">
-              Recomendações
-            </span>
-            <div className="flex-1 h-px bg-border" />
-          </motion.div>
-
-          {activeRecs.map((rec, i) => (
-            <RecommendationCard
-              key={rec.id}
-              title={rec.title}
-              url={rec.url}
-              store={rec.store}
-              index={i}
-            />
-          ))}
-        </div>
-      )}
-
       {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        className="mt-auto pt-12 text-[11px] text-text-secondary/40"
-      >
-        © {new Date().getFullYear()} Mauricio Rodrigues
-      </motion.footer>
+      <Footer name={profile.name} />
     </main>
   );
 }

@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    /** Cloudflare Pages does not support Next.js Image Optimization API */
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;

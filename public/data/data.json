@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Mauricio Rodrigues | Links",
+    "description": "Links oficiais de Mauricio Rodrigues — Engenheiro Fullstack Sênior & Atleta de Endurance.",
+    "ogImage": "/avatar.png",
+    "favicon": "/avatar.png",
+    "lang": "pt-BR"
+  },
+  "theme": {
+    "accentColor": "#10b981",
+    "style": "dark"
+  },
+  "profile": {
+    "name": "Mauricio Rodrigues",
+    "bio": "Engenheiro Fullstack Sênior & Atleta de Endurance",
+    "avatar": "/avatar.png",
+    "verified": true,
+    "socials": [
+      { "platform": "github", "url": "https://github.com/MauricioRFilho" },
+      { "platform": "linkedin", "url": "https://linkedin.com/in/mauricio-d-ba069ab3/" },
+      { "platform": "instagram", "url": "https://instagram.com/mauriciootk/" },
+      { "platform": "strava", "url": "https://strava.com/athletes/65971729" }
+    ]
+  },
+  "sections": [
+    {
+      "type": "link",
+      "title": "Meu GitHub",
+      "subtitle": "Projetos open source & código",
+      "url": "https://github.com/MauricioRFilho",
+      "emoji": "🧑‍💻",
+      "thumbnail": null,
+      "active": true
+    },
+    {
+      "type": "link",
+      "title": "Strava - Treinos & Corridas",
+      "subtitle": "Acompanhe minha rotina de endurance",
+      "url": "https://strava.com/athletes/65971729",
+      "emoji": "🏃",
+      "thumbnail": null,
+      "active": true
+    },
+    {
+      "type": "link",
+      "title": "Contato & Parcerias",
+      "subtitle": null,
+      "url": "mailto:mauricio.srfh@gmail.com",
+      "emoji": "📩",
+      "thumbnail": null,
+      "active": true
+    },
+    {
+      "type": "header",
+      "title": "🛒 Recomendações",
+      "active": true
+    },
+    {
+      "type": "product",
+      "title": "Meu Setup Completo",
+      "subtitle": "Tudo que uso no dia a dia",
+      "url": "https://www.amazon.com.br/shop/mauriciootk/photo/amzn1.shoppablemedia.v1.caa3e863-581f-4994-af9d-b1b028c0794d",
+      "store": "amazon",
+      "thumbnail": null,
+      "active": true
+    },
+    {
+      "type": "product",
+      "title": "Promoções Shopee",
+      "subtitle": "Ofertas selecionadas",
+      "url": "https://shope.ee/30NkYeBSiB",
+      "store": "shopee",
+      "thumbnail": null,
+      "active": true
+    }
+  ]
+}
